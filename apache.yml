@@ -1,6 +1,6 @@
 ---
 
-- hosts: 10.129.135.140
+- hosts: localhost
   remote_user: root
   become: true
   tasks:
