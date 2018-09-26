@@ -1,0 +1,7 @@
+---
+ 
+- name: Install the httpd server
+  yum:
+    name: httpd
+    state: latest
+
