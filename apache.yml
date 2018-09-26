@@ -1,6 +1,6 @@
 ---
 
-- hosts: localhost
+- hosts: client.local
   remote_user: root
   become: true
   tasks:
