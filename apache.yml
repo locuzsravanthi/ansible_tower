@@ -1,7 +1,6 @@
 ---
 
-- hosts: 10.129.135.140
-  remote_user: root
+- hosts: localhost
   become: true
   tasks:
     - name: install httpd
