@@ -1,0 +1,15 @@
+---
+# Tasks for a scalapack
+ 
+- name: Download the package of scalapack
+  get_url: url={{ scalapack_url }} dest=/tmp/scalapack-1.8.0.tgz
+
+- name: Create a directory
+  file: path=/tmp/SCALAPACK state=directory
+
+- name: Extract the package of scalapack
+  unarchive: src=/tmp/{{ scalapack_version }}.tgz dest=/tmp/SCALAPACK/
+
+- name: Copy the SLmake.inc.example
+  copy: src=/tmp/SCALAPACK/{{ scalapack_version }}/SLmake.inc.example dest=/tmp/SCALAPACK/{{ scalapack_version }}/SLmake.inc
+

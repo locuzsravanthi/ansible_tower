@@ -1,0 +1,42 @@
+---
+#Tasks file for BLACS
+
+- name: Create  a directory
+  file: path=/tmp/BLACS state=directory
+
+#- name: Download the mpiblacs
+#  get_url: url={{ mpiblacs_url }} dest=/tmp/BLACS/mpiblacs.tgz 
+
+#- name: Extract the mpiblacs.tgz
+#  unarchive: src=/tmp/BLACS/mpiblacs.tgz dest=/tmp/BLACS/
+
+#- name: Download the mpiblacs-patch03
+#  get_url: url={{ mpiblacspatch03_url }} dest=/tmp/BLACS/mpiblacs-patch03.tgz 
+
+#- name: Extract the mpiblacs-patch03
+#  unarchive: src=/tmp/BLACS/mpiblacs-patch03.tgz dest=/tmp/BLACS/
+
+- name: Copy BMAKES file
+  copy:
+    src: /tmp/BLACS/BLACS/BMAKES/Bmake.MPI-LINUX 
+    dest: /tmp/BLACS/BLACS/Bmake.inc
+
+- name: Edit the Bmake.inc file
+  template:
+    src=Bmake.inc.j2
+    dest=/tmp/BLACS/BLACS/Bmake.inc
+
+- name: Edit the BLACS/TESTING/Makefile
+  lineinfile:
+    state: present
+    dest: /tmp/BLACs/BLACS/TESTING/Makefile
+    regexp: '^blacstest.o : '
+    line: "{{ item }}"
+    with_items:
+      - "{{ Makefile_edit }}"
+#- name: Run the make command
+#  command: "{{ item }}"
+#  args:
+#    chdir: /tmp/BLACS/BLACS
+#  with_items:
+#    - make mpi 

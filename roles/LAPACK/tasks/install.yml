@@ -1,0 +1,30 @@
+---
+# Tasks for LAPACK
+
+- name: Download the package of lapack
+  get_url: url={{ lapack_url }} dest=/tmp/{{ lapack_version }}.tgz
+
+- name: Create a directory
+  file: path=/tmp/LAPACK state=directory
+
+- name: Extract the lapack
+  unarchive: src=/tmp/{{ lapack_version }}.tgz dest=/tmp/LAPACK/
+
+- name: copy a make.inc.example
+  copy: src=/tmp/LAPACK/{{ lapack_version }}/make.inc.example dest=/tmp/LAPACK/{{ lapack_version }}/make.inc
+
+- name: Run the make command
+  command: "{{ item }}"
+  args:
+    chdir: /tmp/LAPACK/{{ lapack_version }}
+  with_items:
+    - make blaslib
+
+- name: Run make command for lapack
+  command: "{{ item }}"
+  args:
+    chdir: /tmp/LAPACK/{{ lapack_version }}
+  with_items:
+    - make lapacklib
+
+

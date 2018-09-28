@@ -1,0 +1,11 @@
+---
+# vars file for GCC8
+
+gcc8_url: https://www.mirrorservice.org/sites/sourceware.org/pub/gcc/releases/gcc-8.1.0/gcc-8.1.0.tar.gz
+
+gcc8_version: gcc-8.1.0
+
+export: |
+  export PATH=/tmp/GCC8/{{ gcc8_version }}/bin:$PATH
+  export LD_LIBRARY_PATH=/tmp/GCC8/{{ gcc8_version }}/lib64:$LD_LIBRARY_PATH
+

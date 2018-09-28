@@ -1,0 +1,134 @@
+---
+
+- name: Install the development tools 
+  yum: 
+    name: "@Development Tools"
+    state: present
+  become: yes
+
+- name: Install the packages
+  yum:
+    name: "{{ item }}"
+    state: present
+  with_items:
+    - "{{ install_lib }}"
+
+- name: Upgrade yum packages
+  yum:
+    name: '*'
+    state: latest
+
+- name: Install the epel repository
+  shell: wget https://dl.fedoraproject.org/pub/epel/7/x86_64/Packages/e/epel-release-7-11.noarch.rpm
+
+- name: Disable the epel repository
+  replace:
+    path: /etc/yum.repos.d/epel.repo
+    regexp: '^enabled=1'
+    replace: 'enabled=0'
+
+- name: Install the package for epel
+  yum:
+    name: qtwebkit-devel
+    enablerepo: epel
+    state: present
+
+- name: Create a directory
+  file:
+    path: /data/OpenFOAM/
+    state: directory
+
+- name: Download the openfoam tar file
+  get_url: 
+    url: "{{ openfoam_url }}"
+    dest: /data/OpenFOAM/
+
+- name: Download the thirdparty tar file
+  get_url:
+    url: "{{ thirdparty_url }}"
+    dest: /data/OpenFOAM/
+
+- name: Extract the tar file of openfoam
+  unarchive:
+    src: /data/OpenFOAM/{{ openfoam_version }}.tgz
+    dest: /data/OpenFOAM/
+
+- name: Extract the tar file of thirdparty
+  unarchive:
+    src: /data/OpenFOAM/{{ thirdparty_version }}.tgz
+    dest: /data/OpenFOAM/
+ 
+- name: Switching to built boost version
+  replace:
+    path: /data/OpenFOAM/{{ openfoam_version }}/etc/config/CGAL.sh
+    regexp: '^boost_version=boost-system'
+    replace: 'boost_version=boost_1_54_0'
+ 
+- name: Load openmpi into the environment
+  shell: module load mpi/openmpi-x86_64
+  args:
+    chdir: /data/OpenFOAM/
+
+- name: Export the bin file of openmpi
+  shell: "{{ item }}"
+  args:
+    chdir: /data/OpenFOAM/
+  with_items:
+    - "{{ export_path }}"
+ 
+- name: Export the openfoam install directory to bashrc
+  lineinfile:
+    state: present
+    dest: /data/OpenFOAM/{{ openfoam_version }}/etc/bashrc 
+    regexp: '^# either'
+    insertafter: '^# either'
+    line: "{{ item }}"
+  with_items:
+    - "{{ path_openfoam }}"
+
+- name: Run the source command
+  shell: "source /data/OpenFOAM/OpenFOAM-2.3.0/etc/bashrc WM_NCOMPPROCS=4 WM_MPLIB=SYSTEMOPENMPI"
+  args:
+    chdir: /data/OpenFOAM/
+ 
+- name: Download the getBoost 
+  get_url:
+    url: "{{ boost_url }}"
+    dest: "{{ WM_THIRD_PARTY_DIR }}"
+
+- name: Permission for the get files
+  shell: 'chmod +x {{ WM_THIRD_PARTY_DIR }}/get*'
+ 
+- name: Run the command getboost
+  shell: "cd {{ WM_THIRD_PARTY_DIR }};./getBoost"
+
+- name: Change the makeCGAL
+  replace:
+    path: "{{ WM_THIRD_PARTY_DIR }}/makeCGAL"
+    regexp: '^boostPACKAGE=boost-system'
+    replace: 'boostPACKAGE=boost_1_54_0'
+   
+- name: Run the makeCGAL command
+  shell: "./makeCGAL"
+  args:
+    chdir: "{{ WM_THIRD_PARTY_DIR }}"
+
+- name: permissions for OpenFOAM
+  file:
+    path: "{{ openfoam_bashrc_path }}"
+    mode: 0755
+
+- name: Update the shell environments
+  shell: "{{ openfoam_bashrc_path }} $FOAM_SETTINGS" 
+  args:
+    chdir: "{{ WM_THIRD_PARTY_DIR }}"
+
+- name: Run "allwmake" command
+  shell: "./Allwmake > log.make 2>&1"
+  args:
+    chdir: "{{ WM_PROJECT_DIR }}"    
+
+- name: Again run the above command
+  shell: "./Allwmake > log.make 2>&1"
+  args:
+    chdir: "{{ WM_PROJECT_DIR }}"   

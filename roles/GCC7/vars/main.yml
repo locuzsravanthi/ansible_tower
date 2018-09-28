@@ -1,0 +1,11 @@
+---
+# vars file for GCC7
+
+gcc7_url: wget http://ftp.mirrorservice.org/sites/sourceware.org/pub/gcc/releases/gcc-7.3.0/gcc-7.3.0.tar.gz
+
+gcc7_version: gcc-7.3.0
+
+export: |
+  export PATH=/tmp/GCC7/{{ gcc7_version }}/bin:$PATH
+  export LD_LIBRARY_PATH=/tmp/GCC7/{{ gcc7_version }}/lib64:$LD_LIBRARY_PATH
+

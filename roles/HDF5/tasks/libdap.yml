@@ -1,0 +1,24 @@
+---
+
+#- name: Download the package for a libdap
+#  get_url: url={{ libdap_url }} dest=/tmp/{{ libdap_version }}.tar.gz
+
+#- name: Extract the package of libdap
+#  unarchive: src=/tmp/{{ libdap_version }}.tar.gz dest=/tmp/HDF5/
+
+#- name: Create a directory
+#  file: path=/usr/local/libdap state=directory
+
+#- name: configure the libdap
+#  command: "{{ item }}"
+#  args:
+#    chdir: /tmp/HDF5/{{ libdap_version }}
+#  with_items:
+#    - ./configure --prefix=/usr/local/libdap
+
+#- name: Run make command
+#  command: "{{ item }}"
+#  args:
+#    chdir: /tmp/HDF5/{{ libdap_version }}
+#  with_items:
+#    - make install

@@ -1,0 +1,26 @@
+---
+#Tasks for installation of BLAS
+
+- name: Download the package of BLAS
+  get_url: url={{ blas_url }} dest=/tmp/blas-3.8.0.tgz
+
+- name: Create a directory
+  file: path=/tmp/BLAS/ state=directory
+  
+- name: Extract the blas package
+  unarchive: src=/tmp/blas-3.8.0.tgz dest=/tmp/BLAS/
+
+- name: Run the make command
+  command: "{{ item }}"
+  args:
+    chdir: /tmp/BLAS/BLAS-3.8.0
+  with_items:
+    - make
+
+- name: Move a file  
+  command: creates="/tmp/BLAS/BLAS-3.8.0/libblas.a" mv /tmp/BLAS/BLAs-3.8.0/blas_LINUX.a /tmp/BLAS/BLAS-3.8.0/libblas.a
+
+- name: copy a file to our library file
+  copy: src=/tmp/BLAS/BLAS-3.8.0/libblas.a dest=/usr/local/lib/
+
+

@@ -1,0 +1,9 @@
+---
+
+#- name: Download the package of hdf5_handler
+#  get_url: url={{ hdf5_handler_url }} dest=/tmp/{{ hdf5_handler_version }}.tar.gz
+  
+#- name: Extract the package
+#  unarchive: src=/tmp/{{ hdf5_handler_version }}.tar.gz dest=/tmp/HDF5/
+
+ 

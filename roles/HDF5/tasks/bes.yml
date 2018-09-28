@@ -1,0 +1,30 @@
+---
+
+#- name: Download the package of bes source
+#  get_url: url={{ bes_url }} dest=/tmp/{{ bes_version }}.tar.gz
+
+#- name: Extract the package
+#  unarchive: src=/tmp/{{ bes_version }}.tar.gz dest=/tmp/HDF5/
+
+#- name: Export the bin and lib files
+#  lineinfile:
+#    state: present
+#    path: /root/.bashrc
+#    insertafter: EOF
+#    line: "{{ item }}"
+#  with_items:
+#    - "{{ export }}"
+
+#- name: Configure the BES
+#  command: "{{ item }}"
+#  args:
+#    chdir: /tmp/HDF5/{{ bes_version }}
+#  with_items:
+#    - ./configure --prefix=/usr/local/libdap
+
+#- name: Run make command
+#  command: "{{ item }}"
+#  args:
+#    chdir: /tmp/HDF5/{{ bes_version }}
+#  with_items:
+#    - make install

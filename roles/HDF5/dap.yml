@@ -1,0 +1,15 @@
+---
+
+- name: Download the package of dap server
+  get_url: url={{ dap_url }} dest=/tmp/{{ dap_version }}.tar.gz
+ 
+- name: Extract the package
+  unarchive: src=/tmp/{{ dap_version }}.tar.gz dest=/tmp/HDF5/
+
+- name: Configure of dap server
+  command: "{{ item }}"
+  args:
+    chdir: /tmp/HDF5/{{ dap_version }}
+  with_items:
+    - ./configure --prefix=/usr/local/{{ libdap_version }}
+

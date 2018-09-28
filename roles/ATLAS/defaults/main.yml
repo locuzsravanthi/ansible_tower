@@ -1,0 +1,6 @@
+---
+# defaults file for ATLAS
+atlas_version: 3.8.2
+atlas_url: https://master.dl.sourceforge.net/project/math-atlas/Stable/{{ atlas_version }}/atlas{{ atlas_version }}.tar.gz
+atlas_prefix: /opt/atlas/{{ atlas_version }}
+

@@ -1,0 +1,6 @@
+---
+# vars file for ATLAS
+atlas_url: https://master.dl.sourceforge.net/project/math-atlas/Stable/3.8.2/atlas3.8.2.tar.gz
+atlas_version: 3.8.2
+
+

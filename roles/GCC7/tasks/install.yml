@@ -1,0 +1,57 @@
+---
+
+- name: Download the tarball of the gcc7
+  shell: "wget http://ftp.mirrorservice.org/sites/sourceware.org/pub/gcc/releases/gcc-7.3.0/gcc-7.3.0.tar.gz"
+  args:
+    chdir: /tmp/ 
+   
+- name: Create a directory
+  file: 
+    path: /tmp/GCC7/ 
+    state: directory
+
+- name: Extract the tar archive of gcc7
+  unarchive: 
+    src: /tmp/{{ gcc7_version }}.tar.gz 
+    dest: /tmp/GCC7/
+
+- name: Install bzip2
+  yum:
+    name: bzip2
+    state: latest
+
+- name: Contrib for the gcc7
+  command: "{{ item }}"
+  args:
+    chdir: /tmp/GCC7/{{ gcc7_version }}
+  with_items:
+    - ./contrib/download_prerequisites
+
+- name: Configure for the gcc7
+  command: "{{ item }}"
+  args:
+    chdir: /tmp/GCC7/{{ gcc7_version }}
+  with_items:
+    - ./configure --disable-multilib --enable-languages=c,c++,fortran --with-system-zlib
+
+- name: Run the make command
+  command: "{{ item }}"
+  args:
+    chdir: /tmp/GCC7/{{ gcc7_version }}
+  with_items:
+    - make -j 4
+
+#- name: Run the make install command
+#  command: "{{ item }}"
+#  args:
+#    chdir: /tmp/GCC7/{{ gcc7_version }}
+#  with_items:
+#    - make install
+
+#- name: Export the bin and lib files
+#  command: "{{ item }}"
+#  args:
+#    chdir: /tmp/GCC7/{{ gcc7_version }}
+#  with_items:
+#    - "{{ export }}"
+ 

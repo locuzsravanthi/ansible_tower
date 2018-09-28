@@ -1,0 +1,41 @@
+---
+- name: Create a directory
+  file: path=/tmp/LAMMPS/ state=directory
+
+- name: Download the package of lammps
+  get_url: url={{ lammps_url }} dest=/tmp/LAMMPS/{{ lammps_version }}.tar.gz
+
+- name: Extract the lammps package
+  unarchive: src=/tmp/LAMMPS/{{ lammps_version }}.tar.gz dest=/tmp/LAMMPS/
+ 
+- name: To edit the makefile    
+  template:
+    src=Makefile.mpi.j2
+    dest={{ temp_dest }}
+
+- name: Run make command
+  command: "{{ item }}"
+  args:
+    chdir: /tmp/LAMMPS/{{ lammps_version }}/src
+  with_items:
+    - make mpi 
+
+- name: check library dependencies
+  command: "{{ item }}"
+  args:
+    chdir: /tmp/LAMMPS/{{ lammps_version }}/src
+  with_items:
+    - ldd lmp_mpi
+ 
+
+
+
+
+
+
+
+
+
+
+
+

@@ -1,0 +1,30 @@
+---
+# vars file for LAMMPS
+fftw_url: http://www.fftw.org/fftw-3.3.8.tar.gz
+fftw_version: fftw-3.3.8
+fftw_prefix: /opt/LAMMPS/prefix_fftw
+openmpi_url: https://download.open-mpi.org/release/open-mpi/v1.10/openmpi-1.10.2.tar.gz
+openmpi_version: openmpi-1.10.2
+openmpi_prefix: /opt/LAMMPS/prefix_openmpi
+export: |  
+  export PATH={{ openmpi_prefix }}/bin:$PATH
+  export LD_LIBRARY_PATH={{ openmpi_prefix }}/lib:$LD_LIBRARY_PATH
+lammps_url: https://sourceforge.net/projects/lammps/files/lammps-16Mar18.tar.gz
+lammps_version: lammps-16Mar18
+libraries: -lm
+LMP_INC: -DLAMMPS_GZIP -DLAMMPS_MEMALIGN=64 -DLAMMPS_JPEG -DLAMMPS_PNG -DLAMMPS_FFMPEG
+mpi_inc: -I/opt/LAMMPS/prefix_openmpi/include
+mpi_path: -L/opt/LAMMPS/prefix_openmpi/lib -lmpi
+mpi_lib: -lmpi
+fft_inc: -DFFTW_FFTW3 -I/opt/LAMMPS/prefix_fftw/include
+fft_path: -L/opt/LAMMPS/prefix_fftw/lib
+fft_lib: -lfftw3f
+jpg_inc: -I/usr/include
+jpg_path: -L/usr/lib64
+jpg_lib: -ljpeg -lpng
+temp_dest: /tmp/LAMMPS/{{ lammps_version }}/src/MAKE/Makefile.mpi
+
+
+
+
+

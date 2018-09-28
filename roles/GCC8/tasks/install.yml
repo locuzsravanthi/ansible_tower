@@ -1,0 +1,61 @@
+---
+ 
+- name: Download the package of gcc8
+  get_url: url={{ gcc8_url }} dest=/tmp/
+
+- name: Create a directory
+  file:
+    path: /tmp/GCC8/
+    state: directory
+
+- name: Extract the package of gcc8
+  unarchive:
+    src: /tmp/{{ gcc8_version }}.tar.gz 
+    dest: /tmp/GCC8/
+
+- name: Install the bzip2
+  yum:
+    name: bzip2
+    state: latest
+
+- name: install the dependiencies
+  command: "{{ item }}"
+  args:
+    chdir: /tmp/GCC8/{{ gcc8_version }}/
+  with_items:
+   - ./contrib/download_prerequisites
+
+- name: Configure the gcc8
+  command: "{{ item }}"
+  args:
+    chdir: /tmp/GCC8/{{ gcc8_version }}/
+  with_items:
+    - ./configure --prefix=/tmp/GCC8/{{ gcc8_version }} --disable-multilib --enable-languages=c,c++,fortran --with-system-zlib --disable-libgcj
+ 
+- name: Run the make command
+  command: "{{ item }}"
+  args:
+    chdir: /tmp/GCC8/{{ gcc8_version }}
+  with_items:
+    - make -j 4
+
+- name: Run the make install command
+  command: "{{ item }}"
+  args:
+    chdir: /tmp/GCC8/{{ gcc8_version }}
+  with_items:
+    - make install
+
+- name: Export the bin and lib files
+  lineinfile:
+    state: present
+    dest: /root/.bashrc
+    insertafter: EOF
+    line: "{{ item }}"
+  with_items:
+    - "{{ export }}"
+
+- name: To see the version of gcc
+  command: "{{ item }}"
+  with_items:
+    - gcc -v

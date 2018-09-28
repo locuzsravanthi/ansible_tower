@@ -1,0 +1,5 @@
+---
+# vars file for SCALAPACK
+
+scalapack_url: http://www.netlib.org/scalapack/scalapack-1.8.0.tgz
+scalapack_version: scalapack-1.8.0

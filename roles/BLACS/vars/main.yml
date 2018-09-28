@@ -1,0 +1,20 @@
+---
+# vars file for BLACS
+
+mpiblacs_url: http://www.netlib.org/blacs/mpiblacs.tgz
+mpiblacspatch03_url: http://www.netlib.org/blacs/mpiblacs-patch03.tgz
+mpidir: /tmp/LAMMPS/openmpi-1.10.2
+mpilibdir: 
+mpiincdir: /opt/LAMMPS/prefix_openmpi/include
+mpilib: 
+sysinc: 
+intface: -Df77IsF2C
+transcomm: -DUseMpi2
+f77: mpif77
+f77flags:
+f77loader:
+cc: mpicc
+ccflags: 
+ccloader:
+Makefile_edit: blacstest.f									$(F77) $(F77NO_OPTFLAGS) -fno-globals -fno-f90 -fugly-complex -w -c $*.f
+

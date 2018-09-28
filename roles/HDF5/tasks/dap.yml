@@ -1,0 +1,21 @@
+---
+
+- name: Download the package of dap server
+  get_url: url={{ dap_url }} dest=/tmp/{{ dap_version }}.tar.gz
+ 
+- name: Extract the package of dap server
+  unarchive: src=/tmp/{{ dap_version }}.tar.gz dest=/tmp/HDF5/
+
+- name: Configure tha dap server
+  command: "{{ item }}"
+  args:
+    chdir: /tmp/HDF5/{{ dap_version }}
+  with_items:
+    - ./configure --prefix=/usr/local/libdap
+
+- name: Run make command
+  command: "{{ item }}"
+  args:
+    chdir: /tmp/HDF5/{{ dap_version }}
+  with_items:
+    - make install

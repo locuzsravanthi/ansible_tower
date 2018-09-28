@@ -1,0 +1,53 @@
+---
+# vars file for OpenFOAM
+
+install_lib: 
+  - openmpi 
+  - openmpi-devel 
+  - zlib-devel 
+  - gstreamer-plugins-base-devel 
+  - libXext-devel 
+  - libGLU-devel 
+  - libXt-devel 
+  - libXrender-devel 
+  - libXinerama-devel 
+  - libpng-devel 
+  - libXrandr-devel 
+  - libXi-devel 
+  - libXft-devel 
+  - libjpeg-turbo-devel 
+  - libXcursor-devel 
+  - readline-devel 
+  - ncurses-devel 
+  - python 
+  - python-devel 
+  - cmake 
+  - qt-devel 
+  - qt-assistant 
+  - mpfr-devel 
+  - gmp-devel
+
+openfoam_bashrc_path: /data/OpenFOAM/{{ openfoam_version }}/etc/bashrc
+
+epel_url: https://dl.fedoraproject.org/pub/epel/7/x86_64/Packages/e/epel-release-7-11.noarch.rpm
+
+openfoam_url: http://downloads.sourceforge.net/foam/OpenFOAM-2.3.0.tgz
+
+thirdparty_url: http://downloads.sourceforge.net/foam/ThirdParty-2.3.0.tgz
+
+openfoam_version: OpenFOAM-2.3.0
+
+thirdparty_version: ThirdParty-2.3.0
+
+export_path: 
+  - export PATH=$PATH:/usr/lib64/openmpi/bin
+
+openfoam_path: source /data/OpenFOAM/{{ openfoam_version }}/etc/bashrc WM_NCOMPPROCS=4 WM_MPLIB=SYSTEMOPENMPI
+
+path_openfoam: export FOAM_INST_DIR=/data/OpenFOAM/
+
+boost_url: https://raw.github.com/wyldckat/scripts4OpenFOAM3rdParty/master/getBoost
+
+WM_THIRD_PARTY_DIR: /data/OpenFOAM/{{ thirdparty_version }}
+
+WM_PROJECT_DIR: /data/OpenFOAM/{{ openfoam_version }}

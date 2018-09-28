@@ -1,0 +1,22 @@
+---
+# vars file for HDF5
+
+hdf5_url: https://support.hdfgroup.org/ftp/HDF5/current18/src/hdf5-1.8.20.tar.gz
+hdf5_version: hdf5-1.8.20
+
+libdap_url: https://www.opendap.org/pub/source/libdap-3.13.0.tar.gz
+libdap_version: libdap-3.13.0
+
+export: |
+  export PATH=/usr/local/libdap/bin:/usr/local/hdf5/bin:$PATH
+  export LD_LIBRARY_PATH=/usr/local/libdap/lib:/usr/local/hdf5/lib:$LD_LIBRARY_PATH
+
+bes_url: https://www.opendap.org/pub/source/bes-3.13.1.tar.gz
+bes_version: bes-3.13.1
+
+dap_url: https://www.opendap.org/pub/source/dap-server-4.1.4.tar.gz
+dap_version: dap-server-4.1.4
+
+hdf5_handler_url: https://www.opendap.org/pub/source/hdf5_handler-2.2.3.tar.gz
+hdf5_handler_version: hdf5_handler-2.2.3
+

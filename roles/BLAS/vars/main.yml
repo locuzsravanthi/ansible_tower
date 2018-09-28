@@ -1,0 +1,5 @@
+---
+# vars file for BLAS
+
+blas_url: http://www.netlib.org/blas/blas-3.8.0.tgz
+

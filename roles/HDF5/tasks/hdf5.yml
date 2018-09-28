@@ -1,0 +1,27 @@
+---
+
+#- name: Download the package of hdf5
+#  get_url: url={{ hdf5_url }} dest=/tmp/{{ hdf5_version }}.tar.gz
+
+#- name: Create a directory
+#  file: path=/tmp/HDF5 state=directory
+
+#- name: Extract the package
+#  unarchive: src=/tmp/{{ hdf5_version }}.tar.gz dest=/tmp/HDF5
+
+#- name: Create a directory
+#  file: path=/usr/local/hdf5 state=directory
+
+#- name: configure for hdf5
+#  command: "{{ item }}"
+#  args:
+#    chdir: /tmp/HDF5/{{ hdf5_version }}
+#  with_items:
+#    - ./configure --prefix=/usr/local/hdf5
+
+#- name: Run make install
+#  command: "{{ item }}"
+#  args:
+#    chdir: /tmp/HDF5/{{ hdf5_version }}
+#  with_items:
+#    - make install

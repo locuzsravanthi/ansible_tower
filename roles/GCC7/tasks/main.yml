@@ -1,0 +1,4 @@
+---
+# tasks file for GCC7
+
+- include: install.yml

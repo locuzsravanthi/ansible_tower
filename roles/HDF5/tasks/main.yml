@@ -1,0 +1,8 @@
+---
+# tasks file for HDF5
+
+- include: hdf5.yml
+- include: libdap.yml
+- include: bes.yml
+- include: dap.yml
+- include: hdf5_handler.yml

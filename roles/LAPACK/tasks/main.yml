@@ -1,0 +1,5 @@
+---
+# tasks file for LAPACK
+
+- include: install.yml
+

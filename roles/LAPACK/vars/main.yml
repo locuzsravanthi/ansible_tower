@@ -1,0 +1,9 @@
+---
+# vars file for LAPACk
+
+
+lapack_url: http://www.netlib.org/lapack/lapack-3.6.0.tgz
+lapack_version: lapack-3.6.0
+
+
+
