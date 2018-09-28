@@ -1,7 +1,6 @@
 ---
 
-- hosts: myhost		
-  become: true
+- hosts: myhost	
   tasks:
     - name: install httpd
       yum:
