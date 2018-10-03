@@ -17,8 +17,13 @@
   with_items:
     - make
 
+- name: Creates  a file
+  file:
+    path: /tmp/BLAS/BLAS-3.8.0/libblas.a
+    state: touch
+
 - name: Move a file  
-  command: creates="/tmp/BLAS/BLAS-3.8.0/libblas.a" mv /tmp/BLAS/BLAs-3.8.0/blas_LINUX.a /tmp/BLAS/BLAS-3.8.0/libblas.a
+  command: mv /tmp/BLAS/BLAS-3.8.0/blas_LINUX.a /tmp/BLAS/BLAS-3.8.0/libblas.a
 
 - name: copy a file to our library file
   copy: src=/tmp/BLAS/BLAS-3.8.0/libblas.a dest=/usr/local/lib/
