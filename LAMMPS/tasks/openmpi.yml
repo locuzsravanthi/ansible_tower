@@ -1,0 +1,39 @@
+---
+- name: Download the package of openmpi
+  get_url: 
+    url: "{{ openmpi_url }}"
+    dest: /tmp/LAMMPS/{{ openmpi_version }}.tar.gz
+
+- name: Extract the package
+  unarchive: 
+    copy: no 
+    src: /tmp/LAMMPS/{{ openmpi_version }}.tar.gz 
+    dest: /tmp/LAMMPS/
+
+- name: create a prefix directory for openmpi
+  file: 
+    path: /opt/LAMMPS/prefix_openmpi 
+    state: directory
+
+- name: configure for openmpi
+  command: "{{ item }}"
+  args:
+    chdir: /tmp/LAMMPS/{{ openmpi_version }}
+  with_items:
+    - ./configure --prefix=/opt/LAMMPS/prefix_openmpi
+
+- name: Run make install
+  command: "{{ item }}"
+  args:
+    chdir: /tmp/LAMMPS/{{ openmpi_version }}
+  with_items:
+    - make install
+
+- name: Appending  lines in existing file 
+  lineinfile:
+    state: present
+    dest: /root/.bashrc
+    insertafter: EOF
+    line: "{{ item }}"
+  with_items:
+    - "{{ export }}"  

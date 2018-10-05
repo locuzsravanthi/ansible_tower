@@ -1,0 +1,51 @@
+---
+#Installation of fftw 
+
+- name: create a  directory
+  file: 
+    path: /opt/LAMMPS 
+    state: directory
+
+- name: Create  a lammps directory
+  file:
+    path: /tmp/LAMMPS/
+    state: directory
+
+- name: Download the package of FFTW
+  get_url: 
+    url: "{{ fftw_url }}"
+    dest: /tmp/LAMMPS/{{ fftw_version }}.tar.gz
+
+- name: Extract the tar.gz file of fftw
+  unarchive: 
+    copy: no 
+    src: /tmp/LAMMPS/{{ fftw_version }}.tar.gz 
+    dest: /tmp/LAMMPS
+
+- name: create a directory
+  file: 
+    path: /opt/LAMMPS/prefix_fftw 
+    state: directory
+
+- name: configure of fftw
+  command: "{{ item }}"
+  args:
+    chdir: /tmp/LAMMPS/{{ fftw_version }}
+  with_items:
+    - ./configure --prefix=/opt/LAMMPS/prefix_fftw --enable-float --enable-debug
+
+- name: Run make command
+  command: "{{ item }}"
+  args:
+    chdir: /tmp/LAMMPS/{{ fftw_version }}
+  with_items:
+    - make
+
+- name: Run make install
+  command: "{{ item }}"
+  args:
+    chdir: /tmp/LAMMPS/{{ fftw_version }}
+  with_items:
+    - make install
+
+

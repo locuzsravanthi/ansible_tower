@@ -1,0 +1,6 @@
+---
+# tasks file for LAMMPS
+
+- include: fftw.yml
+- include: openmpi.yml 
+- include: lammps.yml  
