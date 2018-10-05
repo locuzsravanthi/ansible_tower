@@ -1,17 +1,24 @@
 ---
 - name: Create a directory
-  file: path=/tmp/LAMMPS/ state=directory
+  file: 
+    path: /tmp/LAMMPS/ 
+    state: directory
 
 - name: Download the package of lammps
-  get_url: url={{ lammps_url }} dest=/tmp/LAMMPS/{{ lammps_version }}.tar.gz
+  get_url: 
+    url: "{{ lammps_url }}" 
+    dest: /tmp/LAMMPS/{{ lammps_version }}.tar.gz
 
 - name: Extract the lammps package
-  unarchive: src=/tmp/LAMMPS/{{ lammps_version }}.tar.gz dest=/tmp/LAMMPS/
+  unarchive: 
+    src: /tmp/LAMMPS/{{ lammps_version }}.tar.gz 
+    dest: /tmp/LAMMPS/
+    remote_src: yes
  
 - name: To edit the makefile    
   template:
-    src=Makefile.mpi.j2
-    dest={{ temp_dest }}
+    src: Makefile.mpi.j2
+    dest: "{{ temp_dest }}"
 
 - name: Run make command
   command: "{{ item }}"

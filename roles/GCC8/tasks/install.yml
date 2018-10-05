@@ -1,7 +1,9 @@
 ---
  
 - name: Download the package of gcc8
-  get_url: url={{ gcc8_url }} dest=/tmp/
+  get_url: 
+    url: "{{ gcc8_url }}"
+    dest: /tmp/
 
 - name: Create a directory
   file:
@@ -12,6 +14,7 @@
   unarchive:
     src: /tmp/{{ gcc8_version }}.tar.gz 
     dest: /tmp/GCC8/
+    remote_src: yes
 
 - name: Install the bzip2
   yum:

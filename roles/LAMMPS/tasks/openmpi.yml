@@ -1,12 +1,19 @@
 ---
 - name: Download the package of openmpi
-  get_url: url={{ openmpi_url }} dest=/tmp/LAMMPS/{{ openmpi_version }}.tar.gz
+  get_url: 
+    url: "{{ openmpi_url }}"
+    dest: /tmp/LAMMPS/{{ openmpi_version }}.tar.gz
 
 - name: Extract the package
-  unarchive: copy=no src=/tmp/LAMMPS/{{ openmpi_version }}.tar.gz dest=/tmp/LAMMPS/
+  unarchive: 
+    copy: no 
+    src: /tmp/LAMMPS/{{ openmpi_version }}.tar.gz 
+    dest: /tmp/LAMMPS/
 
 - name: create a prefix directory for openmpi
-  file: path=/opt/LAMMPS/prefix_openmpi state=directory
+  file: 
+    path: /opt/LAMMPS/prefix_openmpi 
+    state: directory
 
 - name: configure for openmpi
   command: "{{ item }}"

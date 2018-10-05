@@ -2,16 +2,25 @@
 #tasks file for gromacs install
 
 - name: create a directory
-  file: path=/opt/atlas state=directory
+  file: 
+    path: /opt/atlas 
+    state: directory
 
 - name: Download the package of atlas
-  get_url: url={{ atlas_url }} dest=/tmp/atlas-{{ atlas_version }}.tar.gz
+  get_url: 
+    url: "{{ atlas_url }}"
+    dest: /tmp/atlas-{{ atlas_version }}.tar.gz
 
 - name: extract atlas tarball
-  unarchive: copy=no src=/tmp/atlas-{{ atlas_version }}.tar.gz dest=/tmp
+  unarchive: 
+    copy: no 
+    src: /tmp/atlas-{{ atlas_version }}.tar.gz 
+    dest: /tmp/
 
 - name: make a build directory
-  file: path=/tmp/ATLAS/ATLAS-BUILD state=directory
+  file: 
+    path: /tmp/ATLAS/ATLAS-BUILD 
+    state: directory
 
 - name: configure of atlas
   command: "{{ item }}"
@@ -21,12 +30,12 @@
     - /tmp/ATLAS/configure
 
 - name: Run make build
-  command: make build
+  command: make 
   args:
     chdir: /tmp/ATLAS/ATLAS-BUILD
 
 - name: Run make check
-  command: make check
+  command: make install
   args:
     chdir: /tmp/ATLAS/ATLAS-BUILD
 
